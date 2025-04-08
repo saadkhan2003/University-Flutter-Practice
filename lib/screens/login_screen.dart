@@ -1,7 +1,6 @@
 // Importing necessary Flutter packages
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'widgets/ElevatedButtons.dart';
 import 'widgets/logincustomfields.dart';
 import 'package:flutter/widgets.dart';
 
@@ -133,26 +132,9 @@ class _LoginScreenState extends State<LoginScreen> {
               SizedBox(height: 30),
 
               // Login Button
-              ElevatedButton(
-                onPressed: () {
-                  // Validating form before proceeding
-                  if (formKey.currentState!.validate()) {
-                    final email = emailController.text;
-                    final password = passwordController.text;
-                    print('Email: $email');
-                    print('Password: $password');
-                  }
-                },
-                style: ElevatedButton.styleFrom(
-                  padding: EdgeInsets.symmetric(horizontal: 40),
-                ),
-                child: Text(
-                  'Login',
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-              ),
-              SizedBox(height: 25),
-              ButtonsA(text: 'Khan'),
+           
+              SizedBox(height: 10),
+              ButtonsA(text: 'Login'),
 
               // Signup navigation text
               Row(
@@ -162,7 +144,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   SizedBox(width: 10),
                   InkWell(
                     onTap: () {
-                      Navigator.pushNamed(context, '/signup');
+                      Navigator.pushNamed(context, 'signup');
                       
                    },
                     child: Text(
