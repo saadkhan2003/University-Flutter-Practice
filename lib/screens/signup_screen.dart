@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:uniflutterloginscreens/screens/widgets/signupcustomfield.dart';
 
 class SignupScreen extends StatefulWidget {
-const SignupScreen({super.key});
+  const SignupScreen({super.key});
 
   @override
   _SignupScreenState createState() => _SignupScreenState();
@@ -18,7 +19,7 @@ class _SignupScreenState extends State<SignupScreen> {
   bool _isPasswordVisible = false;
   bool _isConfirmPasswordVisible = false;
   bool _isTermsAccepted = false;
-  String gender = 'Female';
+  String gender = 'Male';
 
   @override
   void dispose() {
@@ -34,17 +35,18 @@ class _SignupScreenState extends State<SignupScreen> {
     if (_formKey.currentState!.validate()) {
       if (!_isTermsAccepted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Please accept the terms and conditions')),
+          const SnackBar(
+              content: Text('Please accept the terms and conditions')),
         );
         return;
       }
       if (_passwordController.text != _confirmPasswordController.text) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Passwords do not match')),
+          const SnackBar(content: Text('Passwords do not match')),
         );
         return;
       }
-      
+
       print('Signup Successful!');
     }
   }
@@ -73,35 +75,130 @@ class _SignupScreenState extends State<SignupScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              SizedBox(height: 40),
-              Text(
+              const SizedBox(height: 40),
+              const Text(
                 'Create Account',
-                style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold, color: Colors.deepPurple),
+                style: TextStyle(
+                    fontSize: 32,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.deepPurple),
                 textAlign: TextAlign.center,
               ),
-              SizedBox(height: 10),
-              Text(
+              const SizedBox(height: 10),
+              const Text(
                 'Sign up to get started',
                 style: TextStyle(fontSize: 16, color: Colors.grey),
                 textAlign: TextAlign.center,
               ),
-              SizedBox(height: 20),
-              _buildTextField(_nameController, 'Name', Icons.person),
-              SizedBox(height: 20),
-              _buildTextField(_emailController, 'Email', Icons.email),
-              SizedBox(height: 20),
-              _buildPasswordField(),
-              SizedBox(height: 20),
-              _buildConfirmPasswordField(),
-              SizedBox(height: 20),
-              _buildDateField(),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
+
+              // Name field using custom widget
+              Signupcustomfield(
+                text: "Full Name",
+                hintText: "Enter your full name",
+                controller: _nameController,
+                prefixIcon: const Icon(Icons.person_outline),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter your name';
+                  }
+                  return null;
+                },
+              ),
+
+              // Email field using custom widget
+              Signupcustomfield(
+                text: "Email Address",
+                hintText: "Enter your email",
+                keyboardType: TextInputType.emailAddress,
+                controller: _emailController,
+                prefixIcon: const Icon(Icons.email_outlined),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter your email';
+                  }
+                  if (!value.contains('@') || !value.contains('.')) {
+                    return 'Please enter a valid email';
+                  }
+                  return null;
+                },
+              ),
+
+              // Password field using custom widget
+              Signupcustomfield(
+                text: "Password",
+                hintText: "Create a strong password",
+                obscureText: !_isPasswordVisible,
+                controller: _passwordController,
+                prefixIcon: const Icon(Icons.lock_outline),
+                suffixIcon: IconButton(
+                  icon: Icon(_isPasswordVisible
+                      ? Icons.visibility
+                      : Icons.visibility_off),
+                  onPressed: () =>
+                      setState(() => _isPasswordVisible = !_isPasswordVisible),
+                ),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter a password';
+                  }
+                  if (value.length < 6) {
+                    return 'Password must be at least 6 characters';
+                  }
+                  return null;
+                },
+              ),
+
+              // Confirm Password field using custom widget
+              Signupcustomfield(
+                text: "Confirm Password",
+                hintText: "Re-enter your password",
+                obscureText: !_isConfirmPasswordVisible,
+                controller: _confirmPasswordController,
+                prefixIcon: const Icon(Icons.lock_outline),
+                suffixIcon: IconButton(
+                  icon: Icon(_isConfirmPasswordVisible
+                      ? Icons.visibility
+                      : Icons.visibility_off),
+                  onPressed: () => setState(() =>
+                      _isConfirmPasswordVisible = !_isConfirmPasswordVisible),
+                ),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please confirm your password';
+                  }
+                  if (value != _passwordController.text) {
+                    return 'Passwords do not match';
+                  }
+                  return null;
+                },
+              ),
+
+              // Date of Birth field using custom widget
+              Signupcustomfield(
+                text: "Date of Birth",
+                hintText: "YYYY-MM-DD",
+                controller: _dateController,
+                prefixIcon: const Icon(Icons.calendar_today_outlined),
+                suffixIcon: IconButton(
+                  icon: const Icon(Icons.date_range),
+                  onPressed: () => _selectDate(context),
+                ),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please select your date of birth';
+                  }
+                  return null;
+                },
+              ),
+
+              const SizedBox(height: 16),
               _buildGenderSelection(),
-              SizedBox(height: 20),
+              const SizedBox(height: 16),
               _buildTermsCheckbox(),
-              SizedBox(height: 20),
+              const SizedBox(height: 24),
               _buildSignupButton(),
-              SizedBox(height: 20),
+              const SizedBox(height: 16),
               _buildLoginOption(),
             ],
           ),
@@ -110,89 +207,43 @@ class _SignupScreenState extends State<SignupScreen> {
     );
   }
 
-  Widget _buildTextField(TextEditingController controller, String label, IconData icon) {
-    return TextFormField(
-      controller: controller,
-      decoration: InputDecoration(
-        labelText: label,
-        prefixIcon: Icon(icon, color: Colors.deepPurple),
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
-      ),
-      validator: (value) => value == null || value.isEmpty ? 'Please enter your $label' : null,
-    );
-  }
-
-  Widget _buildPasswordField() {
-    return TextFormField(
-      controller: _passwordController,
-      obscureText: !_isPasswordVisible,
-      decoration: InputDecoration(
-        labelText: 'Password',
-        prefixIcon: Icon(Icons.lock, color: Colors.deepPurple),
-        suffixIcon: IconButton(
-          icon: Icon(_isPasswordVisible ? Icons.visibility : Icons.visibility_off, color: Colors.deepPurple),
-          onPressed: () => setState(() => _isPasswordVisible = !_isPasswordVisible),
-        ),
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
-      ),
-      validator: (value) => value == null || value.length < 6 ? 'Password must be at least 6 characters' : null,
-    );
-  }
-
-  Widget _buildConfirmPasswordField() {
-    return TextFormField(
-      controller: _confirmPasswordController,
-      obscureText: !_isConfirmPasswordVisible,
-      decoration: InputDecoration(
-        labelText: 'Confirm Password',
-        prefixIcon: Icon(Icons.lock, color: Colors.deepPurple),
-        suffixIcon: IconButton(
-          icon: Icon(_isConfirmPasswordVisible ? Icons.visibility : Icons.visibility_off, color: Colors.deepPurple),
-          onPressed: () => setState(() => _isConfirmPasswordVisible = !_isConfirmPasswordVisible),
-        ),
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
-      ),
-      validator: (value) => value != _passwordController.text ? 'Passwords do not match' : null,
-    );
-  }
-
-  Widget _buildDateField() {
-    return TextFormField(
-      controller: _dateController,
-      readOnly: true,
-      decoration: InputDecoration(
-        labelText: 'Date of Birth',
-        prefixIcon: Icon(Icons.calendar_today, color: Colors.deepPurple),
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
-      ),
-      onTap: () => _selectDate(context),
-    );
-  }
-
   Widget _buildGenderSelection() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Gender', style: TextStyle(fontSize: 16, color: Colors.deepPurple)),
+        const Text(
+          'Gender',
+          style: TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.w500,
+            color: Colors.black87,
+          ),
+        ),
+        const SizedBox(height: 8),
         Row(
           children: [
-            _buildGenderRadio('Male'),
-            _buildGenderRadio('Female'),
+            Expanded(
+              child: RadioListTile<String>(
+                title: const Text('Male'),
+                value: 'Male',
+                groupValue: gender,
+                onChanged: (value) => setState(() => gender = value!),
+                activeColor: Colors.purple,
+                contentPadding: EdgeInsets.zero,
+              ),
+            ),
+            Expanded(
+              child: RadioListTile<String>(
+                title: const Text('Female'),
+                value: 'Female',
+                groupValue: gender,
+                onChanged: (value) => setState(() => gender = value!),
+                activeColor: Colors.purple,
+                contentPadding: EdgeInsets.zero,
+              ),
+            ),
           ],
         ),
-      ],
-    );
-  }
-
-  Widget _buildGenderRadio(String value) {
-    return Row(
-      children: [
-        Radio(
-          value: value,
-          groupValue: gender,
-          onChanged: (val) => setState(() => gender = val.toString()),
-        ),
-        Text(value),
       ],
     );
   }
@@ -203,8 +254,11 @@ class _SignupScreenState extends State<SignupScreen> {
         Checkbox(
           value: _isTermsAccepted,
           onChanged: (val) => setState(() => _isTermsAccepted = val ?? false),
+          activeColor: Colors.purple,
         ),
-        Expanded(child: Text('I agree to the terms and conditions')),
+        const Expanded(
+          child: Text('I agree to the terms and conditions'),
+        ),
       ],
     );
   }
@@ -212,7 +266,21 @@ class _SignupScreenState extends State<SignupScreen> {
   Widget _buildSignupButton() {
     return ElevatedButton(
       onPressed: _signup,
-      child: Text('Sign Up'),
+      style: ElevatedButton.styleFrom(
+        backgroundColor: Colors.purple,
+        padding: const EdgeInsets.symmetric(vertical: 15),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(8),
+        ),
+      ),
+      child: const Text(
+        'Sign Up',
+        style: TextStyle(
+          fontSize: 16,
+          fontWeight: FontWeight.bold,
+          color: Colors.white,
+        ),
+      ),
     );
   }
 
@@ -220,8 +288,16 @@ class _SignupScreenState extends State<SignupScreen> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Text("Already have an account?"),
-        TextButton(onPressed: () {}, child: Text('Login')),
+        const Text("Already have an account?"),
+        TextButton(
+          onPressed: () {
+            // Navigate to login screen
+          },
+          child: const Text(
+            'Log In',
+            style: TextStyle(color: Colors.purple, fontWeight: FontWeight.bold),
+          ),
+        ),
       ],
     );
   }
