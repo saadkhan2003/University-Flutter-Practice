@@ -1,3 +1,3 @@
-# uniflutterloginscreens
+# University Flutter Practice
 
-A new Flutter project.
+A new Flutter Practice at University
