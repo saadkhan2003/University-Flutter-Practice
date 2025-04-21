@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'widgets/logincustomfields.dart';
 import 'package:flutter/widgets.dart';
+import 'package:auth_buttons/auth_buttons.dart';
 
 // Defining a StatefulWidget for the Login Screen
 class LoginScreen extends StatefulWidget {
@@ -153,6 +154,17 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                 ],
+              ),
+              GoogleAuthButton(
+                onPressed: () {
+                  print('Google button pressed');
+                },
+                style: AuthButtonStyle(
+                  buttonColor: Colors.white,
+                  iconColor: Colors.black,
+                  borderRadius: 10,
+                  padding: EdgeInsets.all(10),
+                ),
               ),
             ],
           ),

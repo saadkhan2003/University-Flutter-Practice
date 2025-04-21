@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:uniflutterloginscreens/screens/login_screen.dart';
-
-
+import 'package:uniflutterloginscreens/screens/widgets/signupcustomfield.dart';
 
 class SignupScreen extends StatefulWidget {
   const SignupScreen({super.key});
@@ -21,6 +20,7 @@ class _SignupScreenState extends State<SignupScreen> {
   bool _isConfirmPasswordVisible = false;
   bool _isTermsAccepted = false;
   String gender = 'Female';
+  
 
   @override
   void dispose() {
@@ -35,24 +35,9 @@ class _SignupScreenState extends State<SignupScreen> {
   void _signup() {
     if (_formKey.currentState!.validate()) {
       if (!_isTermsAccepted) {
-        if(_passwordController.text != _confirmPasswordController.text){
-
-        }
-        // ScaffoldMessenger.of(context).showSnackBar(
-        //   SnackBar(content: Text('Please accept the terms and conditions')),
-        // );
+        if (_passwordController.text != _confirmPasswordController.text) {}
         return;
       }
-
-      // final name = _nameController.text;
-      // final email = _emailController.text;
-      // final password = _passwordController.text;
-      // final gender = gender;
-      // final dob = _dateController.text;
-      // print('Name: $name, Email: $email, Password: $password, Gender: $gender, DOB: $dob');
-      // ScaffoldMessenger.of(context).showSnackBar(
-      //   SnackBar(content: Text('Signup Successful!')),
-      // );
     }
   }
 
@@ -83,34 +68,10 @@ class _SignupScreenState extends State<SignupScreen> {
               children: [
                 SizedBox(height: 40),
                 // App Logo or Title
-                
-
 
                 SizedBox(height: 20),
                 // Name Field
-                TextFormField(
-                  controller: _nameController,
-                  decoration: InputDecoration(
-                    labelText: 'Name',
-                    labelStyle: TextStyle(color: Colors.deepPurple),
-                    prefixIcon: Icon(Icons.person, color: Colors.deepPurple),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                      borderSide: BorderSide(color: Colors.deepPurple),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                      borderSide: BorderSide(color: Colors.deepPurple),
-                    ),
-                  ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter your name';
-                    }
-                    return null;
-                  },
-                ),
-
+               TextFormField(),
                 SizedBox(height: 20),
                 // Email Field
                 TextFormField(
@@ -197,7 +158,8 @@ class _SignupScreenState extends State<SignupScreen> {
                       ),
                       onPressed: () {
                         setState(() {
-                          _isConfirmPasswordVisible = !_isConfirmPasswordVisible;
+                          _isConfirmPasswordVisible =
+                              !_isConfirmPasswordVisible;
                         });
                       },
                     ),
@@ -228,7 +190,8 @@ class _SignupScreenState extends State<SignupScreen> {
                   decoration: InputDecoration(
                     labelText: 'Date of Birth',
                     labelStyle: TextStyle(color: Colors.deepPurple),
-                    prefixIcon: Icon(Icons.calendar_today, color: Colors.deepPurple),
+                    prefixIcon:
+                        Icon(Icons.calendar_today, color: Colors.deepPurple),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
                       borderSide: BorderSide(color: Colors.deepPurple),
@@ -320,7 +283,10 @@ class _SignupScreenState extends State<SignupScreen> {
                     Text("Already have an account?"),
                     TextButton(
                       onPressed: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => LoginScreen()));
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => LoginScreen()));
                         print('Login clicked');
                       },
                       child: Text(
@@ -338,7 +304,3 @@ class _SignupScreenState extends State<SignupScreen> {
     );
   }
 }
-
-
-
-

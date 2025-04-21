@@ -5,13 +5,27 @@ class signupcustomfields extends StatelessWidget {
     final double fontSize;
   const signupcustomfields({super.key,
     required this.text,
-    this.fontSize = 45,
+    this.fontSize = 55,
   });
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
-      
+    return TextFormField(
+      decoration: InputDecoration(
+            labelText: text,
+            labelStyle: TextStyle(color: Colors.deepPurple, fontSize: fontSize, fontWeight: FontWeight.bold),
+            prefixIcon: Icon(Icons.person, color: Colors.deepPurple),
+            border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: BorderSide(color: Colors.deepPurple),
+                    ),
+                  ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter your name';
+                    }
+                    return null;
+                  },
     );
   }
 }
