@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1073239252002",
+    "project_id": "uni-praactice",
+    "storage_bucket": "uni-praactice.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1073239252002:android:837f4c7c65457a79283e7b",
+        "android_client_info": {
+          "package_name": "com.example.uniflutterloginscreens"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAKQRvn63YfM5v0wGE7lD-fSME3TEV8HwE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
