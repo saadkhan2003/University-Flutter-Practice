@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:uniflutterloginscreens/screens/login_screen.dart';
-import 'package:uniflutterloginscreens/screens/widgets/signupcustomfield.dart';
-
 class SignupScreen extends StatefulWidget {
   const SignupScreen({super.key});
 
