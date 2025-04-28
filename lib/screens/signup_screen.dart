@@ -1,17 +1,14 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:uniflutterloginscreens/screens/login_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class SignupScreen extends StatefulWidget {
-
   SignupScreen({super.key});
-
 
   @override
   _SignupScreenState createState() => _SignupScreenState();
 }
-
- 
 
 class _SignupScreenState extends State<SignupScreen> {
   final _formKey = GlobalKey<FormState>();
@@ -26,8 +23,6 @@ class _SignupScreenState extends State<SignupScreen> {
   bool _isConfirmPasswordVisible = false;
   bool _isTermsAccepted = false;
   String gender = 'Female';
-
-  
 
   @override
   void dispose() {
@@ -47,15 +42,6 @@ class _SignupScreenState extends State<SignupScreen> {
       }
     }
   }
-
-  Future<void> createUser() async {
-    final userCredentials = await _auth.createUserWithEmailAndPassword(
-      email: "sdasdasdasd@gmail.com",
-      password: "Saadkhan",
-    );
-    // Handle userCredentials if needed
-  }
-  
 
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
@@ -87,7 +73,7 @@ class _SignupScreenState extends State<SignupScreen> {
 
                 SizedBox(height: 20),
                 // Name Field
-               TextFormField(),
+                TextFormField(),
                 SizedBox(height: 20),
                 // Email Field
                 TextFormField(
@@ -278,7 +264,23 @@ class _SignupScreenState extends State<SignupScreen> {
                 SizedBox(height: 20),
                 // Sign Up Button
                 ElevatedButton(
-                  onPressed: _signup,
+                  onPressed: () async {
+                    final userC = await FirebaseAuth.instance
+                        .createUserWithEmailAndPassword(
+                            email: _emailController.text,
+                            password: _passwordController.text);
+
+                    if (userC != null) {
+                      print('this is user ${userC.user!.email}');
+                      await FirebaseFirestore.instance
+                          .collection('Users')
+                          .doc(userC.user!.uid)
+                          .set({
+                        'User id': userC.user!.uid,
+                        'Emails': userC.user!.email,
+                      });
+                    }
+                  },
                   style: ElevatedButton.styleFrom(
                     padding: EdgeInsets.symmetric(vertical: 15),
                     shape: RoundedRectangleBorder(

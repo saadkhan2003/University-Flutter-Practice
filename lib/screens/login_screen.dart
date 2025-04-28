@@ -142,17 +142,17 @@ class _LoginScreenState extends State<LoginScreen> {
                 onPressed: () async {
                   final userC = await FirebaseAuth.instance
                       .createUserWithEmailAndPassword(
-                          email: 'Saadkhani@gmail.com', password: '123456789');
+                          email: emailController.text,
+                          password: passwordController.text);
 
                   if (userC != null) {
                     print('this is user ${userC.user!.email}');
                     await FirebaseFirestore.instance
-                        .collection('users')
+                        .collection('Users')
                         .doc(userC.user!.uid)
                         .set({
-                      'username': 'Saad Khan',
-                      'uid': userC.user!.uid,
-                      'email': userC.user!.email,
+                      'User id': userC.user!.uid,
+                      'Emails': userC.user!.email,
                     });
                   }
                 },
@@ -178,7 +178,25 @@ class _LoginScreenState extends State<LoginScreen> {
               GoogleAuthButton(
                 onPressed: () {
                   // Handle Google Sign-In here
-                  print('Google Sign-In pressed');
+                  onPressed:
+                  () async {
+                    final userC = await FirebaseAuth.instance
+                        .createUserWithEmailAndPassword(
+                            email: emailController.text,
+                            password: passwordController.text);
+
+                    if (userC != null) {
+                      print('this is user ${userC.user!.email}');
+                      await FirebaseFirestore.instance
+                          .collection('users')
+                          .doc(userC.user!.uid)
+                          .set({
+                        'username': 'Saad Khan',
+                        'uid': userC.user!.uid,
+                        'email': userC.user!.email,
+                      });
+                    }
+                  };
                 },
                 style: AuthButtonStyle(
                   buttonColor: Colors.white,
