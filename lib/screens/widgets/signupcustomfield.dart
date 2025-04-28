@@ -5,13 +5,19 @@ class signupcustomfields extends StatelessWidget {
     final String text;
     final FirebaseAuth _auth = FirebaseAuth.instance;
     final double fontSize;
-  const signupcustomfields({super.key,
+  signupcustomfields({
     required this.text,
     this.fontSize = 55,
   });
 
 
-  final suer
+  Future<void> createUser() async {
+    final userCredentials = await _auth.createUserWithEmailAndPassword(
+      email: "sdasdasdasd@gmail.com",
+      password: "Saadkhan",
+    );
+    // Handle userCredentials if needed
+  }
 
   @override
   Widget build(BuildContext context) {
