@@ -1,12 +1,17 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class signupcustomfields extends StatelessWidget {
     final String text;
+    final FirebaseAuth _auth = FirebaseAuth.instance;
     final double fontSize;
   const signupcustomfields({super.key,
     required this.text,
     this.fontSize = 55,
   });
+
+
+  final suer
 
   @override
   Widget build(BuildContext context) {

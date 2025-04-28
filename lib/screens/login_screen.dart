@@ -159,15 +159,17 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               GoogleAuthButton(
                 onPressed: () {
-                  print('Google button pressed');
+                  // Handle Google Sign-In here
+                  print('Google Sign-In pressed');
                 },
                 style: AuthButtonStyle(
                   buttonColor: Colors.white,
                   iconColor: Colors.black,
-                  borderRadius: 10,
-                  padding: EdgeInsets.all(10),
+                  borderRadius: 10.0,
+                  padding: const EdgeInsets.all(10),
+                  iconSize: 20,
                 ),
-              ),
+              )
             ],
           ),
         ),
