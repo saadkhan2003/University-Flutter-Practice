@@ -7,16 +7,14 @@ import 'firebase_options.dart';
 void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
-);
-
+  );
 
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
     initialRoute: 'login',
     routes: {
       'login': (context) => const LoginScreen(),
-      'signup': (context) => const SignupScreen(),
-      
+      'signup': (context) => SignupScreen(),
     },
   ));
 }

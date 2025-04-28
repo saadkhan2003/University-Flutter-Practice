@@ -1,9 +1,7 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class signupcustomfields extends StatelessWidget {
     final String text;
-    final FirebaseAuth _auth = FirebaseAuth.instance;
     final double fontSize;
   signupcustomfields({
     required this.text,
@@ -11,13 +9,7 @@ class signupcustomfields extends StatelessWidget {
   });
 
 
-  Future<void> createUser() async {
-    final userCredentials = await _auth.createUserWithEmailAndPassword(
-      email: "sdasdasdasd@gmail.com",
-      password: "Saadkhan",
-    );
-    // Handle userCredentials if needed
-  }
+ 
 
   @override
   Widget build(BuildContext context) {

@@ -5,10 +5,8 @@ import 'widgets/logincustomfields.dart';
 import 'package:flutter/widgets.dart';
 import 'package:auth_buttons/auth_buttons.dart';
 
-
 // Defining a StatefulWidget for the Login Screen
 class LoginScreen extends StatefulWidget {
-  
   const LoginScreen({super.key});
 
   @override
@@ -48,7 +46,7 @@ class _LoginScreenState extends State<LoginScreen> {
             children: [
               // Welcome text
               HeadingTextA(text: 'Welcome Back', fontSize: 45),
-    
+
               SizedBox(height: 5),
 
               // Subtitle text
@@ -135,7 +133,7 @@ class _LoginScreenState extends State<LoginScreen> {
               SizedBox(height: 30),
 
               // Login Button
-           
+
               SizedBox(height: 10),
               ButtonsA(text: 'Login'),
 
@@ -148,8 +146,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   InkWell(
                     onTap: () {
                       Navigator.pushNamed(context, 'signup');
-                      
-                   },
+                    },
                     child: Text(
                       'Signup',
                       style: TextStyle(fontWeight: FontWeight.bold),

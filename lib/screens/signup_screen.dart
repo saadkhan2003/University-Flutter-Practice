@@ -1,14 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:uniflutterloginscreens/screens/login_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
 class SignupScreen extends StatefulWidget {
-  const SignupScreen({super.key});
+
+  SignupScreen({super.key});
+
 
   @override
   _SignupScreenState createState() => _SignupScreenState();
 }
 
+ 
+
 class _SignupScreenState extends State<SignupScreen> {
   final _formKey = GlobalKey<FormState>();
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+
   final _nameController = TextEditingController();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
@@ -18,6 +26,7 @@ class _SignupScreenState extends State<SignupScreen> {
   bool _isConfirmPasswordVisible = false;
   bool _isTermsAccepted = false;
   String gender = 'Female';
+
   
 
   @override
@@ -38,6 +47,15 @@ class _SignupScreenState extends State<SignupScreen> {
       }
     }
   }
+
+  Future<void> createUser() async {
+    final userCredentials = await _auth.createUserWithEmailAndPassword(
+      email: "sdasdasdasd@gmail.com",
+      password: "Saadkhan",
+    );
+    // Handle userCredentials if needed
+  }
+  
 
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
