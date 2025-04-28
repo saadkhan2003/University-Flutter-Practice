@@ -1,4 +1,6 @@
 // Importing necessary Flutter packages
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'widgets/logincustomfields.dart';
@@ -135,7 +137,26 @@ class _LoginScreenState extends State<LoginScreen> {
               // Login Button
 
               SizedBox(height: 10),
-              ButtonsA(text: 'Login'),
+              ButtonsA(
+                text: 'Login',
+                onPressed: () async {
+                  final userC = await FirebaseAuth.instance
+                      .createUserWithEmailAndPassword(
+                          email: 'Saadkhani@gmail.com', password: '123456789');
+
+                  if (userC != null) {
+                    print('this is user ${userC.user!.email}');
+                    await FirebaseFirestore.instance
+                        .collection('users')
+                        .doc(userC.user!.uid)
+                        .set({
+                      'username': 'Saad Khan',
+                      'uid': userC.user!.uid,
+                      'email': userC.user!.email,
+                    });
+                  }
+                },
+              ),
 
               // Signup navigation text
               Row(
