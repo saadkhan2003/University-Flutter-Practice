@@ -139,23 +139,7 @@ class _LoginScreenState extends State<LoginScreen> {
               SizedBox(height: 10),
               ButtonsA(
                 text: 'Login',
-                onPressed: () async {
-                  final userC = await FirebaseAuth.instance
-                      .createUserWithEmailAndPassword(
-                          email: emailController.text,
-                          password: passwordController.text);
-
-                  if (userC != null) {
-                    print('this is user ${userC.user!.email}');
-                    await FirebaseFirestore.instance
-                        .collection('Users')
-                        .doc(userC.user!.uid)
-                        .set({
-                      'User id': userC.user!.uid,
-                      'Emails': userC.user!.email,
-                    });
-                  }
-                },
+                
               ),
 
               // Signup navigation text

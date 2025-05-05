@@ -268,8 +268,8 @@ class _SignupScreenState extends State<SignupScreen> {
                     final userC = await FirebaseAuth.instance
                         .createUserWithEmailAndPassword(
                             email: _emailController.text,
-                            password: _passwordController.text);
-
+                            password: _passwordController.text
+                            );
                     if (userC != null) {
                       print('this is user ${userC.user!.email}');
                       await FirebaseFirestore.instance
